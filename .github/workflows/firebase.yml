@@ -1,18 +1,41 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-#Se crea rama
 
 name: Firebase CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
-  build:
 
+  prettier:
+    name: Prettier
+    # needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+          # Make sure the value of GITHUB_TOKEN will not be persisted in repo's config
+          persist-credentials: false
+
+      - name: Prettify code
+        uses: creyD/prettier_action@v4.3
+        with:
+          prettier_options: --write **/*.{js,md}
+          only_changed: True
+          # Set your custom token test
+          github_token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+
+  build:
+    name: Build
+    needs: prettier
     runs-on: ubuntu-latest
 
     strategy:
@@ -36,9 +59,10 @@ jobs:
       with:
         name: build
         path: build
-        
+
   deploy:
     name: Deploy
+    # needs: prettier
     needs: build
     runs-on: ubuntu-latest
     steps:
