@@ -60,8 +60,11 @@ jobs:
         name: build
         path: build
 
-  deploy:
-    name: Deploy
+  deploy-test:
+    name: Deploy test
+    if: github.ref == 'refs/heads/dev'
+    # run: firebase deploy --only hosting:dev --non-interactive --token ${{secrets.FIREBASE_TOKEN}} -m "RunID ${{ github.run_id }} Commit SHA ${{ github.sha }}"
+
     # needs: prettier
     needs: build
     runs-on: ubuntu-latest
@@ -75,7 +78,29 @@ jobs:
       - name: Depoy to Firebase
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting
+          args: deploy --only hosting:dev
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+  
+  deploy-prod:
+    name: Provision Prod
+    if: github.ref == 'refs/heads/master'
+    needs: deploy-test
+    # needs: functionalTestsStaging
+    runs-on: ubuntu-latest
+    environment:
+      name: gh-actions-react-firebase-example.prod
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download Build
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: build
+      - name: Depoy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting:prod
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 

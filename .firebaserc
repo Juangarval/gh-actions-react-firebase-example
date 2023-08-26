@@ -1,5 +1,20 @@
+
+
+
 {
   "projects": {
     "default": "gh-actions-react-firebas-ef60c"
+  },
+  "targets": {
+    "rid1-test": {
+      "hosting": {
+        "dev": [
+          "gh-actions-react-firebas-ef60c-development"
+        ],
+        "prod": [
+          "gh-actions-react-firebas-ef60c-production"
+        ]
+      }
+    }
   }
 }
