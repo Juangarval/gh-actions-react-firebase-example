@@ -3,7 +3,7 @@
 {
   "hosting": [
     {
-      "target": "dev",
+      "target": "default",
       "public": "build",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
     },
