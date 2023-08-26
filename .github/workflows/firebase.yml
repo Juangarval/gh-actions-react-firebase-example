@@ -84,7 +84,7 @@ jobs:
   
   deploy-prod:
     name: Provision Prod
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     needs: deploy-test
     # needs: functionalTestsStaging
     runs-on: ubuntu-latest
