@@ -77,8 +77,8 @@ jobs:
           path: build
       - name: Depoy to Firebase
         uses: serkan-korkac/deploy-firebase-functions@latest
-        with:
-          args: deploy --only hosting
+       # with:
+       #   args: deploy --only hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           TARGET: default
@@ -100,8 +100,8 @@ jobs:
           path: build
       - name: Depoy to Firebase
         uses: serkan-korkac/deploy-firebase-functions@latest
-        with:
-          args: deploy --only hosting
+       # with:
+       #   args: deploy --only hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           TARGET: prod
