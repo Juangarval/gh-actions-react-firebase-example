@@ -76,7 +76,7 @@ jobs:
           name: build
           path: build
       - name: Depoy to Firebase
-        uses: w9jds/firebase-action@master
+        uses: serkan-korkac/deploy-firebase-functions@latest
         with:
           args: deploy --only hosting
         env:
@@ -99,10 +99,13 @@ jobs:
           name: build
           path: build
       - name: Depoy to Firebase
-        uses: w9jds/firebase-action@master
+        uses: serkan-korkac/deploy-firebase-functions@latest
         with:
           args: deploy --only hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           TARGET: prod
 
+
+
+         # uses: w9jds/firebase-action@master
